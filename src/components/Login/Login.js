@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 
 import Card from '../UI/Card/Card';
 import classes from './Login.module.css';
@@ -9,22 +9,24 @@ const Login = (props) => {
   const [emailIsValid, setEmailIsValid] = useState();
   const [enteredPassword, setEnteredPassword] = useState('');
   const [passwordIsValid, setPasswordIsValid] = useState();
+  const [enteredCollege, setEnteredCollege] = useState('');
   const [formIsValid, setFormIsValid] = useState(false);
+
+  useEffect(() => {
+    setFormIsValid(
+      enteredEmail.includes('@') && enteredPassword.trim().length > 6 && enteredCollege.trim().length > 0);
+  },[enteredEmail,enteredPassword,enteredCollege])
 
   const emailChangeHandler = (event) => {
     setEnteredEmail(event.target.value);
-
-    setFormIsValid(
-      event.target.value.includes('@') && enteredPassword.trim().length > 6
-    );
   };
 
   const passwordChangeHandler = (event) => {
     setEnteredPassword(event.target.value);
+  };
 
-    setFormIsValid(
-      event.target.value.trim().length > 6 && enteredEmail.includes('@')
-    );
+  const collegeChangeHandler = (event) => {
+    setEnteredCollege(event.target.value);
   };
 
   const validateEmailHandler = () => {
@@ -69,6 +71,13 @@ const Login = (props) => {
             value={enteredPassword}
             onChange={passwordChangeHandler}
             onBlur={validatePasswordHandler}
+          />
+          <label htmlFor="college">Password</label>
+          <input
+            type="text"
+            id="college"
+            value={enteredCollege}
+            onChange={collegeChangeHandler}
           />
         </div>
         <div className={classes.actions}>
